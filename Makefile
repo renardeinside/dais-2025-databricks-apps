@@ -1,0 +1,2 @@
+run-app:
+	streamlit run src/dais_2025_databricks_apps/app.py
