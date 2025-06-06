@@ -1,7 +1,7 @@
 [project]
 name = "dais-2025-databricks-apps"
 dynamic = ["version"]
-description = "Add your description here"
+description = "Example Databricks App for DAIS 2025"
 readme = "README.md"
 authors = [
     { name = "renardeinside", email = "polarpersonal@gmail.com" }
