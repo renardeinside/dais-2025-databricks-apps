@@ -1,6 +1,6 @@
 [project]
 name = "dais-2025-databricks-apps"
-version = "0.1.0"
+dynamic = ["version"]
 description = "Add your description here"
 readme = "README.md"
 authors = [
@@ -22,6 +22,7 @@ build-backend = "hatchling.build"
 
 [dependency-groups]
 dev = [
+    "databricks-bundles>=0.254.0",
     "hatchling>=1.27.0",
     "watchdog>=6.0.0",
 ]

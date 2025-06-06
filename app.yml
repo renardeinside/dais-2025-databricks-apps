@@ -1,0 +1,6 @@
+command: ["streamlit", "run", "src/dais_2025_databricks_apps/app.py"]
+env:
+  - name: DAIS_2025_APPS_DBSQL_HTTP_PATH
+    value: ${var.dbsql_http_path}
+  - name: DAIS_2025_APPS_GENIE_SPACE_ID
+    value: ${var.genie_space_id}

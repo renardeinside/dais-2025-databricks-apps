@@ -1,5 +1,5 @@
 bundle:
-  name: mcp-on-apps
+  name: dais2025-apps
 
 sync:
   include:
@@ -12,29 +12,19 @@ artifacts:
     build: uv build --wheel
 
 variables:
-  schema_full_name:
+  dbsql_http_path:
     type: string
-    description: Full name of the schema to use (e.g. main.default)
-
-  genie_space_ids:
+    description: DBSQL HTTP path
+  genie_space_id:
     type: string
-    description: JSON-formatted list of Genie space IDs to use (e.g. '["space1", "space2"]')
+    description: Genie space ID
 
 resources:
   apps:
-    mcp-on-apps:
-      name: "mcp-on-apps"
-      description: "MCP Server on Databricks Apps"
+    dais2025-app:
+      name: dais2025-app-${workspace.current_user.id}
+      description: "Example application for DAIS 2025 training for ${workspace.current_user.userName}"
       source_code_path: ./.build
-      config:
-        command:
-          ["uvicorn", "databricks.labs.mcp.servers.unity_catalog.app:app"]
-        
-        env:
-          - name: "SCHEMA_FULL_NAME"
-            value: ${var.schema_full_name}
-          - name: "GENIE_SPACE_IDS"
-            value: ${var.genie_space_ids}
 
 targets:
   dev:

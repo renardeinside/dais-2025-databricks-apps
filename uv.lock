@@ -152,6 +152,7 @@ dependencies = [
 
 [package.dev-dependencies]
 dev = [
+    { name = "databricks-bundles" },
     { name = "hatchling" },
     { name = "watchdog" },
 ]
@@ -168,8 +169,18 @@ requires-dist = [
 
 [package.metadata.requires-dev]
 dev = [
+    { name = "databricks-bundles", specifier = ">=0.254.0" },
     { name = "hatchling", specifier = ">=1.27.0" },
     { name = "watchdog", specifier = ">=6.0.0" },
+]
+
+[[package]]
+name = "databricks-bundles"
+version = "0.254.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/02/0d/9a887bceea35a330f5cf2b8d351e912d6bb51ec4b19d392ff37f24f959f4/databricks_bundles-0.254.0.tar.gz", hash = "sha256:3e7195204e9152849c1cc065325b1f55bb7ecc61447ef537f352cf49c0fd4601", size = 65639, upload-time = "2025-06-03T13:39:34.86Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/77/32/ee44dbf244fadf344bdbf72d6e4032d992af3b3d3de7a6fa582a35fa5745/databricks_bundles-0.254.0-py3-none-any.whl", hash = "sha256:16230ccd6ce0876536783fd83987c257b22d73b9681a8c40a4035ce3af6c13c2", size = 130816, upload-time = "2025-06-03T13:39:33.479Z" },
 ]
 
 [[package]]

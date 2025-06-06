@@ -2,6 +2,7 @@ import streamlit as st
 from dais_2025_databricks_apps.config import Config
 import plotly.express as px
 
+
 def dbsql_basics(config: Config) -> None:
     st.header("Accessing Databricks SQL")
     st.markdown(
@@ -20,9 +21,9 @@ def dbsql_basics(config: Config) -> None:
     with st.spinner("Executing query...", show_time=True):
         st.dataframe(
             config.execute_query(
-                """
+                f"""
                 select pickup_zip, count(*) as total
-                from samples.nyctaxi.trips
+                from {config.full_table_name}
                 where pickup_zip is not null
                 group by pickup_zip
                 order by total desc
@@ -39,9 +40,9 @@ def dbsql_basics(config: Config) -> None:
 
     with st.spinner("Generating chart...", show_time=True):
         df = config.execute_query(
-            """
+            f"""
             select pickup_zip, count(*) as total
-            from samples.nyctaxi.trips
+            from {config.full_table_name}
             where pickup_zip is not null
             group by pickup_zip
             order by total desc
@@ -66,7 +67,7 @@ def dbsql_basics(config: Config) -> None:
     )
     custom_query = st.text_area(
         "Enter your SQL query here:",
-        value="SELECT * FROM samples.nyctaxi.trips LIMIT 10",
+        value=f"SELECT * FROM {config.full_table_name} LIMIT 10",
         height=150,
     )
     if st.button("Execute Query"):

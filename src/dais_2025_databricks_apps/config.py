@@ -2,7 +2,7 @@ from contextlib import contextmanager
 from typing import Any, Generator
 import pandas as pd
 from pydantic_settings import BaseSettings, SettingsConfigDict
-from pydantic import Field
+from pydantic import Field, computed_field
 from databricks.sdk import WorkspaceClient
 import logging
 from databricks import sql
@@ -53,12 +53,84 @@ class Config(BaseSettings):
         description="Databricks Workspace client instance.",
     )
 
+    catalog: str = Field(
+        default="main",
+        description="The catalog to use for SQL queries. Defaults to the current catalog.",
+    )
+
     dbsql_http_path: str = Field(
         description="The HTTP path for the Databricks SQL endpoint.",
     )
     genie_space_id: str = Field(
         description="The Genie space ID for the application.",
     )
+
+    @computed_field(repr=False, description="User ID of the current user.")
+    @property
+    def user_id(self) -> str:
+        """
+        Returns the user ID of the current user.
+        This is computed from the WorkspaceClient's current user.
+        """
+        user_id = self.ws.current_user.me().id
+        assert user_id, "User ID should not be empty."
+        return user_id
+
+    @computed_field(repr=False, description="user schema")
+    @property
+    def user_schema(self) -> str:
+        """
+        Returns the user schema for the current user.
+        This is computed from the user ID.
+        """
+        user_schema = f"apps_{self.user_id}"
+        return user_schema
+
+    @computed_field(repr=False, description="Full table name for the sample dataset.")
+    @property
+    def full_table_name(self) -> str:
+        """
+        Returns the full table name for the sample dataset.
+        This is computed from the catalog and user schema.
+        """
+        full_table_name = f"{self.catalog}.{self.user_schema}.nyctaxi_yellow"
+        return full_table_name
+
+    def __prepare_schema(self) -> None:
+        """
+        Prepare the schema with sample datasets and configurations.
+        This method is called during the initialization of the Config class.
+        """
+
+        # check if schema exists
+        schemas = self.ws.schemas.list(catalog_name=self.catalog)
+        if not any(schema.name == self.user_schema for schema in schemas):
+            self.logger.info(
+                f"Creating schema {self.user_schema} in catalog {self.catalog}"
+            )
+            self.ws.schemas.create(
+                catalog_name=self.catalog,
+                name=self.user_schema,
+                comment="Schema for DAIS 2025 apps",
+            )
+        else:
+            self.logger.info(
+                f"Schema {self.user_schema} already exists in catalog {self.catalog}"
+            )
+
+        # create sample datasets
+
+        if not self.ws.tables.exists(full_name=self.full_table_name).table_exists:
+            self.logger.info(
+                f"Creating sample dataset {self.full_table_name} in catalog {self.catalog} and schema {self.user_schema}"
+            )
+            with self.cursor() as c:
+                c.execute(
+                    f"""
+                    CREATE TABLE {self.full_table_name} AS
+                    SELECT * FROM delta.`/databricks-datasets/nyctaxi/tables/nyctaxi_yellow`
+                    """
+                )
 
     def model_post_init(self, context: Any) -> None:
         super().model_post_init(context)
