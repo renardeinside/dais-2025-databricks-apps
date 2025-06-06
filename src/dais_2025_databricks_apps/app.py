@@ -6,7 +6,7 @@ from dais_2025_databricks_apps.app_pages import dbsql_basics, intro, genie_chat
 
 # Set page config
 st.set_page_config(
-    page_title="Sample Databricks App",
+    page_title="DAIS 2025 | Databricks Apps",
     page_icon="🧱",
     layout="centered",
 )
