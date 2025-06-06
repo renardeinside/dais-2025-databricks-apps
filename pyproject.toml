@@ -19,7 +19,12 @@ requires = ["hatchling", "hatch-vcs"]
 build-backend = "hatchling.build"
 
 [dependency-groups]
-dev = ["databricks-bundles>=0.254.0", "hatchling>=1.27.0", "watchdog>=6.0.0"]
+dev = [
+    "databricks-bundles>=0.254.0",
+ "hatchling>=1.27.0",
+ "pytest>=8.4.0",
+ "watchdog>=6.0.0",
+]
 
 [tool.hatch.build.hooks.custom]
 path = "hooks/apps_build.py"

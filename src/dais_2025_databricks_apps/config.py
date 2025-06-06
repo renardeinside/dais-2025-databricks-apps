@@ -29,6 +29,9 @@ def get_logger() -> logging.Logger:
     return logger
 
 
+logger = get_logger()
+
+
 class Config(BaseSettings):
 
     model_config = SettingsConfigDict(
@@ -40,7 +43,7 @@ class Config(BaseSettings):
     )
 
     logger: logging.Logger = Field(
-        default_factory=get_logger,
+        default=logger,
         repr=False,
         exclude=True,
         description="Logger instance for the application.",
@@ -61,7 +64,7 @@ class Config(BaseSettings):
     dbsql_http_path: str = Field(
         description="The HTTP path for the Databricks SQL endpoint.",
     )
-    
+
     genie_space_id: str = Field(
         description="The Genie space ID for the application.",
     )
@@ -94,7 +97,7 @@ class Config(BaseSettings):
         Returns the full table name for the sample dataset.
         This is computed from the catalog and user schema.
         """
-        full_table_name = f"{self.catalog}.{self.user_schema}.nyctaxi_yellow"
+        full_table_name = "samples.nyctaxi.trips"
         return full_table_name
 
     def __prepare_schema(self) -> None:
