@@ -61,6 +61,7 @@ class Config(BaseSettings):
     dbsql_http_path: str = Field(
         description="The HTTP path for the Databricks SQL endpoint.",
     )
+    
     genie_space_id: str = Field(
         description="The Genie space ID for the application.",
     )

@@ -45,14 +45,14 @@ class AppsBuildHook(BuildHookInterface):
 
         requirements_file.write_text(Path(artifact_path).name, encoding="utf-8")
 
-        # copy the app.yml file to the ./.build folder
-        app_yml_path = Path("app.yml")
-        if app_yml_path.exists():
-            self.app.display_info(f"Copying {app_yml_path} to {build_dir}")
-            shutil.copy(app_yml_path, build_dir)
+        # copy the app.py file to the ./.build folder
+        app_py_path = Path("src/dais_2025_databricks_apps/app.py")
+        if app_py_path.exists():
+            self.app.display_info(f"Copying {app_py_path} to {build_dir}")
+            shutil.copy(app_py_path, build_dir)
         else:
             self.app.display_info(
-                f"{app_yml_path} does not exist, skipping copy to {build_dir}"
+                f"{app_py_path} does not exist, skipping copy to {build_dir}"
             )
 
         self.app.display_info(

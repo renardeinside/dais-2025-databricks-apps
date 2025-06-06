@@ -1,7 +1,6 @@
 from functools import partial
 import streamlit as st
 from dais_2025_databricks_apps.config import Config
-import plotly.express as px
 
 from dais_2025_databricks_apps.app_pages import dbsql_basics, intro, genie_chat
 
