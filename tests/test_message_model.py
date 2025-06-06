@@ -5,7 +5,9 @@ import pandas as pd
 def test_message_model():
     # Test initialization with valid data
     df = pd.DataFrame({"column1": [1, 2, 3], "column2": ["a", "b", "c"]})
-    message = Message(role="user", content="Hello, Genie!", data=df, code="SELECT * FROM table;")
+    message = Message(
+        role="user", content="Hello, Genie!", data=df, code="SELECT * FROM table;"
+    )
 
     # serialize to JSON
     as_dict = message.model_dump()

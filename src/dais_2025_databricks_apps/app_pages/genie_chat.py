@@ -2,7 +2,6 @@ from __future__ import annotations
 import base64
 import io
 from typing import Any
-from venv import logger
 from pydantic import BaseModel, ConfigDict, field_serializer, field_validator
 import streamlit as st
 import pandas as pd

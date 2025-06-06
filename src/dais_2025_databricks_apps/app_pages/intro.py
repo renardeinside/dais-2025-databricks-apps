@@ -1,5 +1,6 @@
 import streamlit as st
 
+
 def intro():
     # Hero section
     st.markdown(
@@ -18,4 +19,3 @@ def intro():
         """,
         unsafe_allow_html=True,
     )
-
