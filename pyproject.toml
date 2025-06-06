@@ -3,9 +3,7 @@ name = "dais-2025-databricks-apps"
 dynamic = ["version"]
 description = "Example Databricks App for DAIS 2025"
 readme = "README.md"
-authors = [
-    { name = "renardeinside", email = "polarpersonal@gmail.com" }
-]
+authors = [{ name = "renardeinside", email = "polarpersonal@gmail.com" }]
 requires-python = ">=3.11"
 dependencies = [
     "databricks-sdk>=0.56.0",
@@ -21,11 +19,7 @@ requires = ["hatchling", "hatch-vcs"]
 build-backend = "hatchling.build"
 
 [dependency-groups]
-dev = [
-    "databricks-bundles>=0.254.0",
-    "hatchling>=1.27.0",
-    "watchdog>=6.0.0",
-]
+dev = ["databricks-bundles>=0.254.0", "hatchling>=1.27.0", "watchdog>=6.0.0"]
 
 [tool.hatch.build.hooks.custom]
 path = "hooks/apps_build.py"

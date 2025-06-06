@@ -26,6 +26,11 @@ resources:
       description: "Example application for DAIS 2025 training for ${workspace.current_user.userName}"
       source_code_path: ./.build
 
+      env:
+        - name: DAIS_2025_APPS_DBSQL_HTTP_PATH
+          value: ${var.dbsql_http_path}
+        - name: DAIS_2025_APPS_GENIE_SPACE_ID
+          value: ${var.genie_space_id}
 targets:
   dev:
     mode: development
