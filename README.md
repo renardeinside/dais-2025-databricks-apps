@@ -1,10 +1,18 @@
 # DAIS 2025 - Databricks Apps Training session
 
 ## Local setup
+1. Clone the repository:
+```bash
+git clone https://github.com/renardeinside/dais-2025-databricks-apps
+cd dais-2025-databricks-apps
+```
 
-1. Make sure you have `uv` installed
-2. Clone this repository
-3. Navigate to the cloned repository
+2. Install `uv`:
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+3. Restart the terminal (close and reopen it) to ensure `uv` is in your PATH.
 4. Run `uv sync` to install the required dependencies
 5. Setup the VSCode to use the virtual environment created by `uv`
 6. Create a new `.env` file in the project directory and add the following variables:
