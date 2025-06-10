@@ -3,7 +3,7 @@
 ## Local setup
 1. Clone the repository:
 ```bash
-git clone https://github.com/renardeinside/dais-2025-databricks-apps
+git clone https://github.com/renardeinside/dais-2025-databricks-apps.git
 cd dais-2025-databricks-apps
 ```
 
