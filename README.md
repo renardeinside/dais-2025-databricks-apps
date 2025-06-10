@@ -16,7 +16,7 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 4. Run `uv sync` to install the required dependencies
 5. Setup the VSCode to use the virtual environment created by `uv`
 6. Create a new `.env` file in the project directory and add the following variables:
-   - `DAIS_2025_APPS_DBSQL_HTTP_PATH`: the HTTP path for your Databricks SQL endpoint, copy it from the Workspace UI
+   - `DAIS_2025_APPS_DBSQL_HTTP_PATH`: the HTTP path for Databricks SQL endpoint, copy it from the Workspace UI
    - `DAIS_2025_APPS_GENIE_SPACE_ID`: create a Genie space in your Databricks workspace and copy the space ID here
 7. Authenticate with Databricks CLI:
    ```bash
@@ -36,8 +36,7 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 2. Deploy the app:
    ```databricks bundle deploy```
 3. Configure the app permissions in the workspace:
-   - provide access to the Genie space you created earlier
-   - provide access to the SQL endpoint you are using (`CAN_USE` permission is required)
+   - provide access to the Genie space you created earlier (`CAN_RUN` )
 4. Run the app:
    ```databricks bundle run dais2025-app```
 
