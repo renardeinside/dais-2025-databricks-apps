@@ -39,7 +39,7 @@ cd ~/dais-2025-databricks-apps
    ```
 3. Run the app:
    ```bash
-   uv run streamlit src/dais_2025_databricks_apps/app.py
+   uv run streamlit run src/dais_2025_databricks_apps/app.py
    ```
 
 
