@@ -100,42 +100,6 @@ class Config(BaseSettings):
         full_table_name = "samples.nyctaxi.trips"
         return full_table_name
 
-    def __prepare_schema(self) -> None:
-        """
-        Prepare the schema with sample datasets and configurations.
-        This method is called during the initialization of the Config class.
-        """
-
-        # check if schema exists
-        schemas = self.ws.schemas.list(catalog_name=self.catalog)
-        if not any(schema.name == self.user_schema for schema in schemas):
-            self.logger.info(
-                f"Creating schema {self.user_schema} in catalog {self.catalog}"
-            )
-            self.ws.schemas.create(
-                catalog_name=self.catalog,
-                name=self.user_schema,
-                comment="Schema for DAIS 2025 apps",
-            )
-        else:
-            self.logger.info(
-                f"Schema {self.user_schema} already exists in catalog {self.catalog}"
-            )
-
-        # create sample datasets
-
-        if not self.ws.tables.exists(full_name=self.full_table_name).table_exists:
-            self.logger.info(
-                f"Creating sample dataset {self.full_table_name} in catalog {self.catalog} and schema {self.user_schema}"
-            )
-            with self.cursor() as c:
-                c.execute(
-                    f"""
-                    CREATE TABLE {self.full_table_name} AS
-                    SELECT * FROM delta.`/databricks-datasets/nyctaxi/tables/nyctaxi_yellow`
-                    """
-                )
-
     def model_post_init(self, context: Any) -> None:
         super().model_post_init(context)
         self.logger.info(
