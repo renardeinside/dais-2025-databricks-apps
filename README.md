@@ -3,29 +3,16 @@
 ## Local setup
 
 
-1. Move to your home directory and clone the repository:
-```bash
-cd ~
-git clone https://github.com/renardeinside/dais-2025-databricks-apps.git
-cd dais-2025-databricks-apps
-```
+1. Step into the project directory:
+   ```bash
+   cd ~/dais-2025-databricks-apps
+   ```
 
-1. Install `uv`:
-```bash
-curl -LsSf https://astral.sh/uv/install.sh | sh
-```
-
-1. Restart the terminal (close and reopen it) to ensure `uv` is in your PATH. After it, go to the project directory:
-```bash
-cd ~/dais-2025-databricks-apps
-```
-
-2. Run `uv sync` to install the required dependencies
-3. Setup the VSCode to use the virtual environment created by `uv`
-4. Create a new `.env` file in the project directory and add the following variables:
+1. Run `uv sync` to install the required dependencies
+3. Create a new `.env` file in the project directory and add the following variables:
    - `DAIS_2025_APPS_DBSQL_HTTP_PATH`: the HTTP path for Databricks SQL endpoint, copy it from the Workspace UI
    - `DAIS_2025_APPS_GENIE_SPACE_ID`: create a Genie space in your Databricks workspace and copy the space ID here
-5. Authenticate with Databricks CLI:
+4. Authenticate with Databricks CLI:
    ```bash
    databricks configure --host=<workspace-url>
    ```
