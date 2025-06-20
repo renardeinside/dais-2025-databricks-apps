@@ -7,6 +7,8 @@ from databricks.sdk import WorkspaceClient
 import logging
 from databricks import sql
 from databricks.sql.client import Cursor
+from pathlib import Path
+from dotenv import load_dotenv
 
 
 def get_logger() -> logging.Logger:
@@ -31,15 +33,27 @@ def get_logger() -> logging.Logger:
 
 logger = get_logger()
 
+# to the project root directory
+env_file_path = Path(__file__).parent.parent.parent / ".env"
+
+if env_file_path.exists():
+    logger.info(f"Loading environment variables from {env_file_path.absolute()}")
+    load_dotenv(env_file_path)
+else:
+    logger.warning(
+        f"Environment file {env_file_path.absolute()} does not exist. "
+        "Make sure to create it with the necessary configurations."
+    )
+
 
 class Config(BaseSettings):
 
     model_config = SettingsConfigDict(
-        env_file=".env",
+        env_file=env_file_path,  # path to the .env file
         env_prefix="DAIS_2025_APPS_",  # for app-based configuration
         cli_parse_args=True,  # for command-line based configuration
         cli_ignore_unknown_args=True,  # ignore unknown command-line arguments
-        extra="ignore",  # ignore unknown environment variables
+        extra="allow",  # ignore unknown environment variables
     )
 
     logger: logging.Logger = Field(
