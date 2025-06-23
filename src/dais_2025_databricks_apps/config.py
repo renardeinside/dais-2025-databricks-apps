@@ -1,8 +1,7 @@
 from contextlib import contextmanager
 from typing import Any, Generator
 import pandas as pd
-from pydantic_settings import BaseSettings, SettingsConfigDict
-from pydantic import Field, computed_field
+from pydantic import BaseModel, Field, computed_field
 from databricks.sdk import WorkspaceClient
 import logging
 from databricks import sql
@@ -46,15 +45,13 @@ else:
     )
 
 
-class Config(BaseSettings):
+import os 
 
-    model_config = SettingsConfigDict(
-        env_file=env_file_path,  # path to the .env file
-        env_prefix="DAIS_2025_APPS_",  # for app-based configuration
-        cli_parse_args=True,  # for command-line based configuration
-        cli_ignore_unknown_args=True,  # ignore unknown command-line arguments
-        extra="allow",  # ignore unknown environment variables
-    )
+for env in os.environ:
+    if env.startswith("DAIS_2025_APPS_"):
+        logger.debug(f"Environment variable {env} is set to {os.environ[env]}")
+
+class Config(BaseModel):
 
     logger: logging.Logger = Field(
         default=logger,
@@ -75,13 +72,22 @@ class Config(BaseSettings):
         description="The catalog to use for SQL queries. Defaults to the current catalog.",
     )
 
-    dbsql_http_path: str = Field(
-        description="The HTTP path for the Databricks SQL endpoint.",
-    )
+    @property
+    def dbsql_http_path(self) -> str:
+        return os.environ["DAIS_2025_APPS_DBSQL_HTTP_PATH"]
 
-    genie_space_id: str = Field(
-        description="The Genie space ID for the application.",
-    )
+    @property
+    def genie_space_id(self) -> str:
+        """
+        Returns the Genie space ID for the application.
+        This is set in the environment variable DAIS_2025_APPS_GENIE_SPACE_ID.
+        """
+        genie_space_id = os.environ.get("DAIS_2025_APPS_GENIE_SPACE_ID")
+        if not genie_space_id:
+            raise ValueError(
+                "Environment variable DAIS_2025_APPS_GENIE_SPACE_ID is not set."
+            )
+        return genie_space_id
 
     @computed_field(repr=False, description="User ID of the current user.")
     @property
