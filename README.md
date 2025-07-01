@@ -17,6 +17,13 @@
    databricks configure --host=<workspace-url>
    ```
 
+**Please make sure that you have the latest version of Databricks CLI and it's configured correctly**.
+
+To check validity of configuration, please run:
+
+```
+databricks auth describe
+```
 
 ## Run the app locally
 1. Make sure you have the `.env` file created with the required variables
